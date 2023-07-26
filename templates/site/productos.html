@@ -1,0 +1,31 @@
+{% include 'site/cabecera.html' %}
+    
+   
+        <div class="row">
+            {%for producto in productos %}
+            <div class="col-md-2">
+                <div class="card">
+                    <img class="card-img-top" src="/img/{{producto[7]}}" alt="Title">
+                    <div class="card-body">
+                        <h4 class="card-title">{{producto[1]}}</h4>
+      
+                        <h8 class="card-title">precio: {{producto[2]}}</h8>
+                        <br>
+                        <h8 class="card-title">Descripcion: {{producto[3]}}</h8>
+                        <br>
+                        <h8 class="card-title">stock: {{producto[4]}}</h8>
+                        <br>
+                        <h8 class="card-title">id marca: {{producto[5]}}</h8>
+                        <br>
+                        <h8 class="card-title">id tipo: {{producto[6]}}</h8>
+                        <p class="card-text">
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+
+
+{% include 'site/pie.html' %}

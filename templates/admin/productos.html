@@ -1,0 +1,125 @@
+{% include 'admin/cabecera.html' %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header">
+                    Datos del producto
+                </div>
+                <div class="card-body">
+                    
+                    <form action="/admin/productos/guardar" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="id" class="form-label">ID producto</label>
+                            <input type="text"
+                              class="form-control" name="txtid" id="txtid" aria-describedby="helpId" placeholder="ingrese el id del prod">
+                        <div class="mb-3">
+                          <label for="nombreprod" class="form-label">Nombre producto</label>
+                          <input type="text"
+                            class="form-control" name="txtnomprod" id="txtnomprod" placeholder="ingrese nombre del producto">
+                        </div>
+                        <div class="mb-3">
+                          <label for="valor" class="form-label">Valor producto</label>
+                          <input type="text"
+                            class="form-control" name="txtvalor" id="txtvalor" aria-describedby="helpId" placeholder="ingrese el valor del prod">
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripcion</label>
+                            <input type="text"
+                              class="form-control" name="txtdescripcion" id="txtdescripcion" aria-describedby="helpId" placeholder="ingrese la descripcion">
+  
+                          </div>
+                          <div class="mb-3">
+                            <label for="stock" class="form-label">Stock </label>
+                            <input type="text"
+                              class="form-control" name="txtstock" id="txtstock" aria-describedby="helpId" placeholder="ingrese el stock del prod">
+  
+                          </div>
+                          <div class="mb-3">
+                            <label for="idmarca" class="form-label">ID marca</label>
+                            <input type="text"
+                              class="form-control" name="txtidmarca" id="txtidmarca" aria-describedby="helpId" placeholder="ingrese el id de la marca">
+  
+                          </div>
+                          <div class="mb-3">
+                            <label for="idclase" class="form-label">id de clase</label>
+                            <input type="text" class="form-control" name="txtidclase" id="txtidclase" aria-describedby="helpId" placeholder="ingrese el id de la clase">
+  
+                          </div>
+                          <div class="mb-3">
+                            <label for="idclase" class="form-label">imagen</label>
+                            <input type="file" class="form-control" name="txtimagen" id="txtimagen" placeholder="ingrese la imagen">
+
+                          </div>
+  
+                          </div>
+                          <div class="card-footer text-muted">
+                        <button type="submit" class="btn btn-primary">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+           
+        </div>
+        <div class="col-md-7">
+            <div class="table-responsive">
+                <table class="table table-primary">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Descricion</th>
+                            <th scope="col">stock</th>
+                            <th scope="col">marca</th>
+                            <th scope="col">clase</th>
+                            <th scope="col">imagen</th>
+                            <th scope="col">acciones</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for producto in productos%}
+                        <tr class="">
+                            <td scope="row">{{producto[0]}}</td>
+                            <td>{{producto[1]}}</td>
+                            <td>{{producto[2]}}</td>
+                            <td>{{producto[3]}}</td>
+                            <td>{{producto[4]}}</td>
+                            <td>{{producto[5]}}</td>
+                            <td>{{producto[6]}}</td>
+                            <td>
+                                <div>
+                                    <img width="60" src="/img/{{producto[7]}}" class="img-fluid rounded-top" alt="">
+                                    
+                                </div>
+                            </td>
+                            <td>
+                                <form action="/admin/productos/borrar" method="post">
+                                    <input value="{{producto[0]}}" type="hidden" name="txtid" id="txtid">
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+                                <br>
+                                <form action="/admin/productos/actualizar" method="post">
+                                    <input value="{{producto[0]}}" type="hidden" name="txtid" id="txtid">
+                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                </form>
+                            </td>
+                        </tr>
+
+                        {%endfor%}
+                     
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+
+
+{% include 'admin/pie.html' %}

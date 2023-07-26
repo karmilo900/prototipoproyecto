@@ -1,0 +1,11 @@
+{% include 'admin/cabecera.html' %}
+    <div class="p-5 bg-light">
+        <h1 class="display-3">Bienvenido <strong>{{session['usuario']}}</strong> de Inexpress</h1>
+        <p class="lead">Aqui podra administrar los productos</p>
+        <hr class="my-2">
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="/productos" role="button">Empezar la gestion</a>
+        </p>
+    </div>
+
+{% include 'admin/pie.html' %}

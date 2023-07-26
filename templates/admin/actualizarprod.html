@@ -1,0 +1,77 @@
+{% include 'admin/cabecera.html' %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Datos del producto
+                </div>
+                <div class="card-body">
+                    {%for producto in productos%}
+
+                    <form action="/admin/actualizar" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="id" class="form-label">ID producto</label>
+                            <input type="text"class="form-control" name="txtid" id="txtid" aria-describedby="helpId" placeholder="ingrese el id del prod" value="{{producto[0]}}">
+                        <div class="mb-3">
+                          <label for="nombreprod" class="form-label">Nombre producto</label>
+                          <input type="text"
+                            class="form-control" value="{{producto[1]}}" name="txtnomprod" id="txtnomprod" placeholder="ingrese nombre del producto">
+                        </div>
+                        <div class="mb-3">
+                          <label for="valor" class="form-label">Valor producto</label>
+                          <input type="text"
+                            class="form-control" value="{{producto[2]}}" name="txtvalor" id="txtvalor" aria-describedby="helpId" placeholder="ingrese el valor del prod">
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripcion</label>
+                            <input type="text"
+                              class="form-control" value="{{producto[3]}}" name="txtdescripcion" id="txtdescripcion" aria-describedby="helpId" placeholder="ingrese la descripcion">
+  
+                          </div>
+                          <div class="mb-3">
+                            <label for="stock" class="form-label">Stock </label>
+                            <input type="text"
+                              class="form-control" value="{{producto[4]}}" name="txtstock" id="txtstock" aria-describedby="helpId" placeholder="ingrese el stock del prod">
+  
+                          </div>
+                          <div class="mb-3">
+                            <label for="idmarca" class="form-label">ID marca</label>
+                            <input type="text"
+                              class="form-control" value="{{producto[5]}}" name="txtidmarca" id="txtidmarca" aria-describedby="helpId" placeholder="ingrese el id de la marca">
+  
+                          </div>
+                          <div class="mb-3">
+                            <label for="idclase" class="form-label">id de clase</label>
+                            <input type="text" value="{{producto[6]}}" class="form-control" name="txtidclase" id="txtidclase" aria-describedby="helpId" placeholder="ingrese el id de la clase">
+  
+                          </div>
+                          <div class="mb-3">
+                            <label for="idclase" class="form-label">imagen</label>
+                            <input type="file" value="{{producto[7]}}" class="form-control" name="txtimagen" id="txtimagen" placeholder="ingrese la imagen">
+
+                          </div>
+  
+                          </div>
+                          <div class="card-footer text-muted">
+                        <button type="submit" class="btn btn-primary">Agregar</button>
+                        </div> 
+                    </form>
+                    
+                    {%endfor%}
+                </div>
+            </div>
+           
+        </div>
+                 
+                       
+                       
+
+    </div>
+</div>
+
+
+
+{% include 'admin/pie.html' %}
