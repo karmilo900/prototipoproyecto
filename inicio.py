@@ -217,6 +217,46 @@ def admin_usuarios_guardar():
 
     return redirect('/admin/usuarios')
 
+@app.route('/admin/usuarios/actualizar', methods=['post'])
+def admin_usuarios_actualizar():
+    if not 'login' in session:
+        return redirect("admin/login")
+    id_=request.form['txtid']
+    print(id_)
+    
+    conexion=mysql.connect()
+    cursor=conexion.cursor()
+    cursor.execute('SELECT * FROM productos WHERE idprod=%s',(id_))
+    productos=cursor.fetchall()
+    conexion.commit()
+    print(productos)
+
+    return render_template('/admin/actualizarprod.html',productos=productos)
+    
+
+@app.route('/admin/actualizar', methods=['POST'])
+def admin_actualizarusu():
+    if not 'login' in session:
+        return redirect("admin/login")
+    
+    id_=request.form['txtid']
+    nombre_=request.form['txtnomprod']
+    valor_=request.form['txtvalor']
+    descripcion_=request.form['txtdescripcion']
+    
+
+
+    sql = "UPDATE `usuarios` SET `idusuario`='%s',`nombreusuario`='%s',`rolusuario`='%s',`contraseña`='%s' WHERE `idusuario`='%s'"
+    datos = (id_, nombre_, valor_, descripcion_)
+
+    conexion = mysql.connect()
+    cursor = conexion.cursor()
+    cursor.execute(sql, datos)
+    conexion.commit()
+
+
+    return redirect('/admin/productos')
+
    
 if __name__ =='__main__':
     app.run(debug=True)
