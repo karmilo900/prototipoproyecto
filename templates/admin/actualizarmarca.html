@@ -1,0 +1,31 @@
+{% include 'admin/cabecera.html' %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header">
+                    Datos del usuario
+                </div>
+                <div class="card-body">
+                    {%for marca in marcas%}
+                    <form action="/admin/actualizarmarca" method="POST" >
+                        <div class="mb-3">
+                            <label for="id" class="form-label">ID marca</label>
+                            <input type="number" value="{{marca[0]}}" class="form-control" name="txtid" id="txtid" aria-describedby="helpId" placeholder="ingrese el id del prod">
+                        </div>
+                        <div class="mb-3">
+                          <label for="nombreprod" class="form-label">Marca</label>
+                          <input type="text" value="{{marca[1]}}" class="form-control"  name="txtnommarca" id="txtnomusu" placeholder="ingrese nombre del producto">
+                        </div>
+                        <div class="card-footer text-muted">
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                        </div>
+                    </form>
+                    {%endfor%}
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+        {% include 'admin/pie.html' %}

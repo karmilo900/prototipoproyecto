@@ -66,6 +66,7 @@ def admin_login_cerrar():
     session.clear()
     return redirect('/admin/login')
 
+#crud productos
 @app.route('/admin/productos')
 def admin_productos():
     if not 'login' in session:
@@ -76,6 +77,7 @@ def admin_productos():
     cursor.execute('SELECT * FROM productos')
     productos=cursor.fetchall()
     conexion.commit()
+    print(productos)
     return render_template('admin/productos.html', productos=productos)
 
 
@@ -147,6 +149,7 @@ def admin_productos_actualizar():
     
     conexion=mysql.connect()
     cursor=conexion.cursor()
+    
     cursor.execute('SELECT * FROM productos WHERE idprod=%s',(id_))
     productos=cursor.fetchall()
     conexion.commit()
@@ -180,7 +183,7 @@ def admin_actualizarprod():
     print(imagen_.filename)
 
     return redirect('/admin/productos')
-
+#crud usuarios
 
 @app.route('/admin/usuarios')
 def admin_usuarios():
@@ -226,28 +229,28 @@ def admin_usuarios_actualizar():
     
     conexion=mysql.connect()
     cursor=conexion.cursor()
-    cursor.execute('SELECT * FROM productos WHERE idprod=%s',(id_))
-    productos=cursor.fetchall()
+    cursor.execute('SELECT * FROM usuarios WHERE idusuario=%s',(id_))
+    usuarios=cursor.fetchall()
     conexion.commit()
     print(productos)
 
-    return render_template('/admin/actualizarprod.html',productos=productos)
+    return render_template('/admin/actualizarusuario.html',usuarios=usuarios)
     
 
-@app.route('/admin/actualizar', methods=['POST'])
+@app.route('/admin/actualizarusu', methods=['POST'])
 def admin_actualizarusu():
     if not 'login' in session:
         return redirect("admin/login")
     
     id_=request.form['txtid']
-    nombre_=request.form['txtnomprod']
-    valor_=request.form['txtvalor']
-    descripcion_=request.form['txtdescripcion']
+    nombre_=request.form['txtnomusu']
+    rol_=request.form['txtrolusuario']
+    contrasena_=request.form['txtcontrasena']
     
 
 
-    sql = "UPDATE `usuarios` SET `idusuario`='%s',`nombreusuario`='%s',`rolusuario`='%s',`contraseña`='%s' WHERE `idusuario`='%s'"
-    datos = (id_, nombre_, valor_, descripcion_)
+    sql = "UPDATE `usuarios` SET `idusuario`=%s,`nombreusuario`=%s,`rolusuario`=%s,`contraseña`=%s WHERE `idusuario`=%s"
+    datos = (id_, nombre_, rol_, contrasena_,id_)
 
     conexion = mysql.connect()
     cursor = conexion.cursor()
@@ -255,7 +258,104 @@ def admin_actualizarusu():
     conexion.commit()
 
 
-    return redirect('/admin/productos')
+    return redirect('/admin/usuarios')
+
+@app.route('/admin/usuarios/borrar', methods=['post'])
+def admin_usuarios_borrar():
+    if not 'login' in session:
+        return redirect("/admin/login")
+    
+    id_=request.form['txtid']
+    print(id_)
+    conexion=mysql.connect()
+    cursor=conexion.cursor()
+    cursor.execute('DELETE FROM usuarios WHERE idusuario=%s',(id_))
+    conexion.commit()
+
+    return redirect('/admin/usuarios')
+#crud marcas
+@app.route('/admin/marcas')
+def admin_marcas():
+    if not 'login' in session:
+        return redirect("/admin/login")
+    
+    conexion=mysql.connect()
+    cursor=conexion.cursor()
+    cursor.execute('SELECT * FROM marcaprod')
+    marcas=cursor.fetchall()
+    conexion.commit()
+    return render_template('admin/marcas.html', marcas=marcas)
+
+
+@app.route('/admin/marcas/guardar', methods=['POST'])
+def admin_marcas_guardar():
+
+    if not 'login' in session:
+        return redirect("/admin/login")
+    
+    id_=request.form['txtid']
+    marca_=request.form['txtnommarca']
+
+    sql="INSERT INTO `marcaprod`(`idmarca`, `marca`) VALUES (%s,%s)"
+    datos=(id_,marca_)
+
+    conexion=mysql.connect()
+    cursor=conexion.cursor()
+    cursor.execute(sql,datos)
+    conexion.commit()
+
+
+    return redirect('/admin/marcas')
+
+@app.route('/admin/marcas/actualizar', methods=['post'])
+def admin_marcas_actualizar():
+    if not 'login' in session:
+        return redirect("admin/login")
+    id_=request.form['txtid']
+    print(id_)
+    
+    conexion=mysql.connect()
+    cursor=conexion.cursor()
+    cursor.execute('SELECT * FROM marcaprod WHERE idmarca=%s',(id_))
+    marcas=cursor.fetchall()
+    conexion.commit()
+    
+
+    return render_template('/admin/actualizarmarca.html',marcas=marcas)
+    
+
+@app.route('/admin/actualizarmarca', methods=['POST'])
+def admin_actualizarmarca():
+    if not 'login' in session:
+        return redirect("admin/login")
+    
+    id_=request.form['txtid']
+    nombre_=request.form['txtnommarca']
+
+    sql = "UPDATE `marcaprod` SET `idmarca`=%s,`marca`=%s WHERE idmarca=%s"
+    datos = (id_, nombre_,id_)
+
+    conexion = mysql.connect()
+    cursor = conexion.cursor()
+    cursor.execute(sql, datos)
+    conexion.commit()
+
+
+    return redirect('/admin/marcas')
+
+@app.route('/admin/marcas/borrar', methods=['post'])
+def admin_marcas_borrar():
+    if not 'login' in session:
+        return redirect("/admin/login")
+    
+    id_=request.form['txtid']
+    print(id_)
+    conexion=mysql.connect()
+    cursor=conexion.cursor()
+    cursor.execute('DELETE FROM marcaprod WHERE idmarca=%s',(id_))
+    conexion.commit()
+
+    return redirect('/admin/usuarios')
 
    
 if __name__ =='__main__':
